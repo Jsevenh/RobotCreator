@@ -1,7 +1,7 @@
 import FreeCAD
 import FreeCADGui
 import os 
-from PySide import QtGui,QtCore
+from PySide2 import QtGui,QtCore
 import copy
 
 import xml.etree.ElementTree as ET

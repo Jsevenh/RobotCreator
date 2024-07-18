@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element name="joint" required="1">
+    <attribute name="type" default="revolute" required="1" />
+    <attribute name="name" default="joint_name" required="1" />
+    <!-- 
+ continuous 
+ fixed
+ revolute
+ prismatic
+ floating 
+ plannar
+    -->
+    <include filename="origin.urdf" required="1"/>
+    <element name="parent" required="1">
+        <attribute name="link" default="parent_link" />
+    </element>
+    <element name="child">
+        <attribute name="link" default="child_link" />
+    </element>
+
+    <element name="axis" required="1">
+        <attribute name="xyz" default="1.0 0.0 0.0" />
+    </element>
+
+    <element name="limit" required="0">
+        <attribute name="lower" default="0.0" required="1" />
+        <attribute name="upper" default="0.0" required="1" />
+        <attribute name="effort" default="0.0" required="1" />
+        <attribute name="velocity" default="0.0" required="1" />
+    </element>
+
+    <element name="dynamics" required="0" >
+            <attribute name="damping" default="0.0" required="0"/>
+            <attribute name="friction" default="0.0" required="0"/>
+    </element>
+   
+    <element name="calibration" required="0">
+        <attribute name="rising" default="" required="0"/>
+        <attribute name="falling" default=""  required="0"/>
+    </element>
+
+    <element name="safety_controller" required="0">
+        <attribute name="k_velocity" default="0.0" required="1"/>
+        <attribute name="k_position" default="0" required="0"/>
+        <attribute  name="soft_lower_limit" default="0" required="0"/>
+        <attribute name="soft_upper_limit" default="0" required="0"/>
+    </element>
+</element>

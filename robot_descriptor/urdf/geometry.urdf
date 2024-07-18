@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<element name="geometry" required="1">
+    <element name="box" required="0">
+      <attribute name="size" default="0.0 0.0 0.0" />
+    </element>
+    <element name="cylinder" required="0">
+      <attribute name="radius" default="0.0" required="1" />
+      <attribute name="length" default="0.0" required="1" />
+    </element>
+    <element name="sphere" required="0">
+      <attribute name="radius" default="0.0" required="0" />
+    </element>
+    <element name="mesh" required="0">
+      <attribute name="filename" default="file_path" required="1" />
+      <attribute name="scale" default="1.0" required="1" />
+    </element>
+</element>

@@ -1,7 +1,7 @@
 
 from .. import common
 
-from . import  RD_parse_sdf
+from . import  RD_parse_description_templates
     
 import xml.etree.ElementTree as ET
 
@@ -11,7 +11,7 @@ class convdict_2_tree:
         '''sfile : file name to read the element properties from  located in ../sdf \n
         use the get_elem  property  to get the initialized element '''
         #initialize class
-        self.struct_class=RD_parse_sdf.sdf_parse(file=sfile)
+        self.struct_class=RD_parse_description_templates.parse_template(file=sfile)
         #get the dictionary structure
         self.structured=self.struct_class.data_structure
         #a stack of parent elements

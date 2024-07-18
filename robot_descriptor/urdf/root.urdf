@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element name="robot" required="1">
+    <attribute name="name" default="robot_name"/>
+    <attribute name="xmlns:xacro" default="http://www.ros.org/wiki/xacro" required="0"/>
+</element>

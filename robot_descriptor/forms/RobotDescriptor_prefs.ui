@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Robot_Descriptor_preferences</class>
+ <widget class="QWidget" name="Robot_Descriptor_preferences">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>526</width>
+    <height>749</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>General</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QGroupBox" name="formats">
+     <property name="minimumSize">
+      <size>
+       <width>500</width>
+       <height>85</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>100</height>
+      </size>
+     </property>
+     <property name="title">
+      <string>formats </string>
+     </property>
+     <widget class="Gui::PrefRadioButton" name="urdf_radio_btn">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>40</y>
+        <width>133</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>urdf</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+      <property name="prefEntry" stdset="0">
+       <cstring>format_urdf</cstring>
+      </property>
+      <property name="prefPath" stdset="0">
+       <cstring>Mod/RobotDescriptor</cstring>
+      </property>
+     </widget>
+     <widget class="Gui::PrefRadioButton" name="sdf_radio_btn">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>40</y>
+        <width>133</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>sdf</string>
+      </property>
+      <property name="prefEntry" stdset="0">
+       <cstring>format_sdf</cstring>
+      </property>
+      <property name="prefPath" stdset="0">
+       <cstring>Mod/RobotDescriptor</cstring>
+      </property>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="sdf_version_select_2">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>sdf version</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Gui::PrefComboBox" name="sdf_version_select">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="prefEntry" stdset="0">
+         <cstring>sdf_version</cstring>
+        </property>
+        <property name="prefPath" stdset="0">
+         <cstring>Mod/RobotDescriptor</cstring>
+        </property>
+        <item>
+         <property name="text">
+          <string>1.7</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1.8</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1.9</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1.10</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="mesh_format">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>mesh export format</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Gui::PrefComboBox" name="mesh_select">
+        <property name="prefEntry" stdset="0">
+         <cstring>mesh_type</cstring>
+        </property>
+        <property name="prefPath" stdset="0">
+         <cstring>Mod/RobotDescriptor</cstring>
+        </property>
+        <item>
+         <property name="text">
+          <string>stl</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Dae</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>512</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Gui::PrefRadioButton</class>
+   <extends>QRadioButton</extends>
+   <header>Gui/PrefWidgets.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Gui::PrefComboBox</class>
+   <extends>QComboBox</extends>
+   <header>Gui/PrefWidgets.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>sdf_radio_btn</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>sdf_version_select</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>346</x>
+     <y>83</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>160</x>
+     <y>156</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

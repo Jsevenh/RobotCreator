@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<element name="sensor" required="0">
+    <attribute name="name" default="my_sensor" required="1"/>
+    <attribute  name="update_rate" default="1.0" required="1"/>
+
+
+    <element name="parent" required="1">
+        <attribute name="link" default="parent_link" />
+    </element>
+    <include filename="origin.urdf" required="1"/>
+
+</element>

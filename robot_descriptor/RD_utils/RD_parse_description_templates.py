@@ -5,8 +5,8 @@ from .. import common
 
 
 import FreeCAD 
-_dir=os.path.join(FreeCAD.getUserAppDataDir(),"Mod","RobotDescriptor","robot_descriptor","sdf")
-
+__dir__=os.path.join(FreeCAD.getUserAppDataDir(),"Mod","RobotDescriptor","robot_descriptor")
+__format_pref__=FreeCAD.ParamGet("User parameter:BaseApp/Preferences/Mod/RobotDescriptor")
 #_dir=os.path.join(os.path.expanduser("~"),'Documents/RobotDescriptor/robot_descriptor/sdf')
 
 #this class will store element attributes to allow ease of access later 
@@ -42,10 +42,13 @@ class Element_Attributes:
 
     
 #class to parse the sdf file and generate a dictioanary 
-class sdf_parse:
-    def __init__(self,version='1.10',file='root.sdf'):
+class parse_template:
+    def __init__(self,version=None,file=None):
         #initialize directory with the root.sdf
-        self.root_dir=os.path.join(_dir,version,file)
+        if version is None and __format_pref__.GetBool("format_urdf"):
+            self.root_dir=os.path.join(__dir__,"urdf",file)
+        else:
+            self.root_dir=os.path.join(__dir__,"sdf",file)
         self.version=version
         #create a dictionary 
         self.Main_ElemDict={}
@@ -137,7 +140,7 @@ class sdf_parse:
         return self.Main_ElemDict
      
 if __name__=="__main__":  
-    s=sdf_parse(file="world.sdf")
+    s=parse_template(file="world.sdf")
     d=s.data_structure
     print(d)
     print("done with this stage hopefully")

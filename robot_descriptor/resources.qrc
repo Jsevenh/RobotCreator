@@ -1,0 +1,20 @@
+<RCC>
+  <qresource prefix="/">
+    <file>icons/add.png</file>
+    <file>icons/edit.png</file>
+    <file>icons/edit.svg</file>
+    <file>icons/initialize.svg</file>
+    <file>icons/joint.svg</file>
+    <file>icons/link16.png</file>
+    <file>icons/link24.png</file>
+    <file>icons/link32.png</file>
+    <file>icons/minus.png</file>
+    <file>icons/ref16.png</file>
+    <file>icons/ref24.png</file>
+    <file>icons/ref32.png</file>
+    <file>icons/preferences-robotdescriptor.svg</file>
+    <file>icons/robot_icon.svg</file>
+    <file>icons/urdf_icon.svg</file>
+    <file>icons/world_properties.svg</file>
+  </qresource>
+</RCC>

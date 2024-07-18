@@ -1,0 +1,36 @@
+<element name="link" required="0">
+  <attribute name="name" default="link_name" required="1" />
+  <element name="inertial" required="0">
+    <include filename="origin.urdf" required="1" />
+    <element name="mass" required="1">
+      <attribute name="value" default="0.0" required="1" />
+    </element>
+
+    <element name="inertia" required="1">
+      <attribute name="ixx" default="0.0" required="1" />
+      <attribute name="ixy" default="0.0" required="1" />
+      <attribute name="ixz" default="0.0" required="1" />
+      <attribute name="iyy" default="0.0" required="1" />
+      <attribute name="iyz" default="0.0" required="1" />
+      <attribute name="izz" default="0.0" required="1" />
+    </element>
+  </element>
+
+  <element name="visual" required="1">
+    <attribute name="name" default="" required="0" />
+
+    <include filename="origin.urdf" required="1" />
+    <include filename="geometry.urdf" />
+    <element name="material" required="0">
+      <attribute name="rgba" default="0.0 0.0 0.0 0.0" required="0" />
+      <attribute name="texture" default="" required="0" />
+    </element>
+
+  </element>
+
+  <element name="collision" required="0">
+    <attribute name="name" default="" required="0" />
+    <include filename="origin.urdf" required="1" />
+    <include filename="geometry.urdf" />
+  </element>
+</element>
