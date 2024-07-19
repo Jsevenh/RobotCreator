@@ -1,7 +1,7 @@
 from FreeCAD import Gui
 from FreeCAD import Base
 import FreeCAD, FreeCADGui, Part, os, math
-
+from robot_descriptor import resources
 __title__ = "RobotDescriptor Workbench - Init file"
 __author__ = ''
 __url__ = "https://www.freecadweb.org"
@@ -20,15 +20,29 @@ class RobotDescriptor (Workbench):
 	def Initialize(self):
 		"This function is executed when FreeCAD starts"
 		__dirname__ = os.path.join(FreeCAD.getUserAppDataDir(), "Mod", "RobotDescriptor")
+		#add icon path 
+		FreeCADGui.addIconPath(":/icons")
 		#print("got dir:" + __dirname__);
-  
-		from robot_descriptor import initialize ,model_editor
-		from robot_descriptor.sdf_elements import world
-		self.list = ['RD_initialize','world_properties','Model_Editor']
-		self.appendToolbar("RobotDescription",self.list) # creates a new toolbar with your commands
-		self.appendMenu("Robot Description",self.list) # creates a new menu
+		prefer_ui=os.path.join(__dirname__,"robot_descriptor","forms","RobotDescriptor_prefs.ui")
+		FreeCADGui.addPreferencePage(prefer_ui,"RobotDescriptor")
+		format=App.ParamGet("User parameter:BaseApp/Preferences/Mod/RobotDescriptor")
+		# format_sdf is the name used to store the sdf property 
+		# check the  preferences ui file  an the FreeCAD documentation on preferences 
+		# https://wiki.freecad.org/Workbench_creation then jump to the preferences section
+		if format.GetBool("format_sdf") is True:
+			from robot_descriptor import initialize ,model_editor
+			from robot_descriptor.sdf_elements import world
+			self.list = ['RD_sdf_init','world_properties','Model_Editor']
+			self.appendToolbar("RobotDescription",self.list) # creates a new toolbar with your commands
+			self.appendMenu("Robot Description",self.list) # creates a new menu
+		elif format.GetBool("format_urdf") is True:
+			from robot_descriptor import initialize
+			self.list=["RD_urdf_init"]
+			self.appendToolbar("RobotDescription",self.list) # creates a new toolbar with your commands
+			self.appendMenu("Robot Description",self.list) 
 		#self.appendMenu(["Robot Description","Tools"],self.list) # appends a submenu to an existing menu
-
+		#add icon path 
+	
 	def Activated(self):
 		"This function is executed when the workbench is activated"
 		return

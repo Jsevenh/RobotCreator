@@ -7,6 +7,7 @@ from .. import common
 import FreeCAD 
 __dir__=os.path.join(FreeCAD.getUserAppDataDir(),"Mod","RobotDescriptor","robot_descriptor")
 __format_pref__=FreeCAD.ParamGet("User parameter:BaseApp/Preferences/Mod/RobotDescriptor")
+sdf_versions={'0':'1.7','1':'1.8','2':'1.9','3':'1.10'}
 #_dir=os.path.join(os.path.expanduser("~"),'Documents/RobotDescriptor/robot_descriptor/sdf')
 
 #this class will store element attributes to allow ease of access later 
@@ -43,13 +44,13 @@ class Element_Attributes:
     
 #class to parse the sdf file and generate a dictioanary 
 class parse_template:
-    def __init__(self,version=None,file=None):
+    def __init__(self,file=None):
         #initialize directory with the root.sdf
-        if version is None and __format_pref__.GetBool("format_urdf"):
+        if __format_pref__.GetBool("format_urdf") is True:
             self.root_dir=os.path.join(__dir__,"urdf",file)
-        else:
-            self.root_dir=os.path.join(__dir__,"sdf",file)
-        self.version=version
+        elif __format_pref__.GetBool("format_sdf") is True:
+            version=str(__format_pref__.GetInt("sdf_version"))
+            self.root_dir=os.path.join(__dir__,"sdf",sdf_versions[version],file)
         #create a dictionary 
         self.Main_ElemDict={}
         #parse tree and store the result in local variable tree
