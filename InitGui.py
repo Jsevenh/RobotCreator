@@ -32,12 +32,13 @@ class RobotDescriptor (Workbench):
 		if format.GetBool("format_sdf") is True:
 			from robot_descriptor import initialize ,model_editor
 			from robot_descriptor.sdf_elements import world
-			self.list = ['RD_sdf_init','world_properties','Model_Editor']
+			self.list = ['RD_init','world_properties','Model_Editor']
 			self.appendToolbar("RobotDescription",self.list) # creates a new toolbar with your commands
 			self.appendMenu("Robot Description",self.list) # creates a new menu
 		elif format.GetBool("format_urdf") is True:
 			from robot_descriptor import initialize
-			self.list=["RD_urdf_init"]
+			from robot_descriptor.urdf import assemble
+			self.list=["RD_init","assemble"]
 			self.appendToolbar("RobotDescription",self.list) # creates a new toolbar with your commands
 			self.appendMenu("Robot Description",self.list) 
 		#self.appendMenu(["Robot Description","Tools"],self.list) # appends a submenu to an existing menu

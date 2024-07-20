@@ -149,7 +149,5 @@ class RD_init:
 			return False
 
 
-if __format_pref__.GetBool("format_urdf" ) is True:
-	FreeCADGui.addCommand('RD_urdf_init',RD_init()) 
-else:
-   FreeCADGui.addCommand('RD_sdf_init',RD_init()) 
+
+FreeCADGui.addCommand('RD_init',RD_init()) 

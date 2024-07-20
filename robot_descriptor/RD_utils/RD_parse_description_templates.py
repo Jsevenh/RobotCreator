@@ -47,10 +47,10 @@ class parse_template:
     def __init__(self,file=None):
         #initialize directory with the root.sdf
         if __format_pref__.GetBool("format_urdf") is True:
-            self.root_dir=os.path.join(__dir__,"urdf",file)
+            self.root_dir=os.path.join(__dir__,"urdf_templates",file)
         elif __format_pref__.GetBool("format_sdf") is True:
             version=str(__format_pref__.GetInt("sdf_version"))
-            self.root_dir=os.path.join(__dir__,"sdf",sdf_versions[version],file)
+            self.root_dir=os.path.join(__dir__,"sdf_templates",sdf_versions[version],file)
         #create a dictionary 
         self.Main_ElemDict={}
         #parse tree and store the result in local variable tree
