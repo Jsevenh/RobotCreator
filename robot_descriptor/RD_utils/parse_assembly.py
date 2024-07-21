@@ -23,13 +23,14 @@ def rotation_matrix_to_rpy(rotation_matrix):
 
 def calculate_inertia_tensor(obj, rho=1):	
 	'''
-	rho is in kg *m^2 
+	rho is in kg m^-3 
 	inertia is the value calculated from freecad
 	FreeCAD might use a different unit system for its moment of inertia output.
-	By interpreting the units as L^5/mm^5 and multiplying by the density (converted to kg/mm^3),
-	you can transform the output into kg⋅mm^2 by multiplying by 1e-9
- 	Finally, convert to kg⋅m^2  by applying the necessary scaling factor (10^−6).
-	reference 
+	By interpreting the units as L^5( e.g mm^5) and multiplying by  density L•M^-3(converted to kg/mm^3),
+	density value is first converted to kg•mm^-3 ( multiplying by 1e-9)
+	the  result from the inertia and dendity calculation  is in kg•mm^2 
+	result is transformed to kg•m^2 by multiplying by 1e-6 and returned 
+	reference:
 	Physical units are kg•m², freecad assumes density = 1 to decouple the values from the objects mass. 
 	So that would be just m²
 	https://forum.freecad.org/viewtopic.php?t=6836
@@ -52,9 +53,12 @@ def calculate_inertia_tensor(obj, rho=1):
 		matrix_of_inertia[1][1] = inertia_matrix.A22
 		matrix_of_inertia[1][2] = inertia_matrix.A23
 		matrix_of_inertia[2][2] = inertia_matrix.A33
-		for i in range(3):
-			for j in range(3):
-				matrix_of_inertia[i][j] =  matrix_of_inertia[i][j]*(rho*1e-9)*1e-6
+		# for i in range(3):
+		# 	for j in range(3):
+		# 		matrix_of_inertia[i][j] =  matrix_of_inertia[i][j]*(rho*1e-9)*1e-6
+		
+#   return the matrix of inertia as is  the exact value will be calculated  during export 
+#  based on the density of the material 
 		return matrix_of_inertia
 
 def calc_mass(volume,rho):
@@ -102,7 +106,6 @@ def get_link_info(link, density=1):
   
 def extract_joint_info():
 	joint_info={}
-	joint_list=[]
 	#Check if assembly object is available 
 	assm=App.ActiveDocument.findObjects("Assembly::AssemblyObject")
  # ensure an assembly exists in the active document 

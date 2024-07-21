@@ -13,8 +13,6 @@ from .RD_utils import initialize_element_tree
 __format_pref__=FreeCAD.ParamGet("User parameter:BaseApp/Preferences/Mod/RobotDescriptor")
 #class to store the selected properties
 
-_DESCRIPTION_FORMAT='sdf'
-_SDF_VERSION='1.10'
 #this will hold the entire sdf definition of the sdf file 
 #as a dictionary which will then be converted into a .sdf file
 

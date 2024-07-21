@@ -4,7 +4,8 @@ by many functions
 functions:\n
 set_xml_data(): to write data to xml elements\n
 get_xml_data: to read data from xml elements
-
+GetFormatPref(): to get the preferred format
+GetSdfVersionPref() : to get the preferred sdf version 
 variable:
 UI_PATH
 ICON_PATH
@@ -25,7 +26,58 @@ import xml.etree.ElementTree as ET
 import re
 from typing import Union
 
-
+'''
+get user
+'''
+__pref__=FreeCAD.ParamGet("User parameter:BaseApp/Preferences/Mod/RobotDescriptor")
+def GetFormatPref(instance:type,format:str=None)->Union[bool, str]:
+    '''
+     Get the the  preferred format
+    instance determines if you want  the return value to be a bool or a string
+    instance can either be bool or str only 
+    format for now can either be urdf or sdf
+    '''
+    global __pref__
+    if instance is bool:
+        if format=='urdf':
+            return __pref__.GetBool("format_urdf")
+        elif format=='sdf':
+            return __pref__.GetBool("format_sdf")
+        else:
+            raise TypeError("unsupported type only urdf or sdf supported")
+    elif instance is str:
+        if __pref__.GetBool("format_sdf") is True:
+            return str("sdf")
+        elif  __pref__.GetBool("format_urdf") is True:
+            return str("urdf")
+        else:
+            pass
+    else:
+       raise TypeError("type is not allowed  choose bool or str")
+   
+def GetSdfVersionPref()->str:
+    '''
+    get the preferred sdf version 
+    '''
+    global __pref__
+    ver=["1.7","1.8","1.9","1.10"]
+    version_number= __pref__.GetInt("sdf_version")
+    if version_number <= len(ver):
+        return ver[version_number]
+    else:
+        return ver[0]
+def GetMeshPref()->str:
+    '''
+    get the preferred mesh export type 
+    '''
+    global __pref__
+    fmts=['stl','dae']
+    msh=__pref__.GetInt("mesh_type")
+    if msh <= len(fmts):
+        return fmts[msh]
+    else:
+        return fmts[0]
+        
 #will be used to extract vectors from element types of vector3,pose ....
 def extract_vector_n(input_string):
     '''this extracts a vector from a string of  numbers '''
@@ -117,6 +169,7 @@ def get_xml_data(element:ET.Element,tag:Union[str,list],Is_Attribute:bool=False)
                 except:
                     return float(elem_data)    
             except:
+                #  the value must be a string for it to fail being converted to both int and float 
                 return elem_data
     
     if Is_Attribute is not True:
@@ -166,7 +219,7 @@ def parse_dict(root_dict:dict,path:list):
 # used to track the current index of the path list  
     current_idx=0
     if len(path)==1:
-        if path[-1]=='sdf':
+        if path[-1]=='sdf' or path[-1]=='urdf' :
                 return root_dict[path[-1]]
         elif path[-1] in list(root_dict.keys()):
                 return root_dict[path[-1]]
@@ -191,14 +244,17 @@ def update_dictionary(path:list,child_tag:Union[str,None],elem:Union[list,ET.Ele
     parameters:
      1. first element is a proxy object that stores the elem dictionary 
      2. Element to append to parent 
-     3. path to the parent element implemented a list see RD_globals.parse_dict
+     3. path to the parent element implemented a list see common.parse_dict
      4. elem: element to be updated or inserted
     This parses the dictionary stored in the proxy attribute   for a parent with tag parent_elem \n
     and appends elem_str  and returns True
      if the parent with that tag is not found  False is returned''' 
      
 #get the element dictionary 
-    elem_dict=FreeCAD.ActiveDocument.Robot_Description.Proxy.element_dict
+    if GetFormatPref(str) =='sdf':
+        elem_dict=FreeCAD.ActiveDocument.sdf.Proxy.element_dict
+    else:
+        elem_dict=FreeCAD.ActiveDocument.urdf.Proxy.element_dict
 
     parent_dict=parse_dict(elem_dict,path)
     if parent_dict is not None:
@@ -219,7 +275,10 @@ def update_dictionary(path:list,child_tag:Union[str,None],elem:Union[list,ET.Ele
                 parent_dict["children"][child_tag]={'elem_str':ET.tostring(elem,encoding="unicode"),"recurring":False,"children":{}}
                
 #I dont know if this is necessary 
-        FreeCAD.ActiveDocument.Robot_Description.Proxy.element_dict=elem_dict
+        if GetFormatPref(str) =='sdf':
+            elem_dict=FreeCAD.ActiveDocument.sdf.Proxy.element_dict=elem_dict
+        else:
+            elem_dict=FreeCAD.ActiveDocument.urdf.Proxy.element_dict=elem_dict
         return True
     return False
    
