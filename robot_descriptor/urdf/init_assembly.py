@@ -5,7 +5,7 @@ from PySide2 import QtCore
 from ..RD_utils import parse_assembly,initialize_element_tree
 from .. import common
 
-
+from  .urdf_dialog import Ui_urdf
 
 class link_list(QtCore.QAbstractListModel):
     def __init__(self):
@@ -27,10 +27,10 @@ class extract_assembly:
     def __init__(self):
         pass
     
-class assemble_ui(QDialog):
+class assemble_ui(QDialog,Ui_urdf):
     def __init__(self,parent=None):
-        super.__init__()
-
+        super().__init__()
+        self.setupUi(self)
     def sizeHint(self) -> QSize:
         return QSize(250,730)
     def init_ui(self):

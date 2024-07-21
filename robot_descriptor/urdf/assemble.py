@@ -3,7 +3,7 @@ import resources
 import FreeCAD as App
 import FreeCADGui
 from PySide2.QtWidgets import QMessageBox
-from . import assembly_ui
+from . import init_assembly
 class extract_assembly():
     """My new command"""
 
@@ -16,11 +16,11 @@ class extract_assembly():
     def Activated(self):
         """Do something here"""
         if len(App.ActiveDocument.findObjects("Assembly::AssemblyObject"))==0:
-            QMessageBox(QMessageBox.information,"Asssembly Status","No assembly Found!!")
+            QMessageBox.information(self,"Asssembly Status","No assembly Found!!")
             return
         else:
             #to be implemented
-            assemble=assembly_ui.assemble_ui()
+            assemble=init_assembly.assemble_ui()
             assemble.exec_()
     def IsActive(self):
         """
@@ -29,7 +29,7 @@ class extract_assembly():
         ."""
         doc=App.ActiveDocument
         if hasattr(doc,"Robot_Description"):
-            if hasattr(doc.Robot_Description,"urdf"):
+            if hasattr(doc,"urdf"):
                 return True
         else:
             return False
